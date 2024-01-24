@@ -18,7 +18,12 @@ public class Main
 	public void doCatStuff()
 	{
 		// Put your code here
-		System.out.println("cats are from space");
+		Cat ginger = new Cat("Ginger");
+
+		while (ginger.isAlive == true){
+
+			ginger.kill();
+		}
 	}
 	
 	public static void main(String[] args)
