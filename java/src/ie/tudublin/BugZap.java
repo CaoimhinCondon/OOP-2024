@@ -8,6 +8,7 @@ public class BugZap extends PApplet{
     float playerY;
     float playerWidth = 30;
     float movementSpeed = 2;
+    float zapFireTime = 1;
 
     public void settings(){
 
@@ -42,6 +43,11 @@ public class BugZap extends PApplet{
         rect(rectX, rectY, playerWidth, playerHeight);
     }
 
+    public void drawZapper(){
+
+        line(playerX, playerY-((playerWidth/2)/2), playerX, 0);
+    }
+
     public void playerInput(){
 
         if (keyCode == RIGHT && keyPressed == true){
@@ -56,6 +62,12 @@ public class BugZap extends PApplet{
             background(0);
             playerX -= movementSpeed;
             drawPlayer(playerX, playerY, playerWidth);
+        }
+
+        if (keyCode == ' '){
+
+            //Draws zapper
+            drawZapper();
         }
     }
 
