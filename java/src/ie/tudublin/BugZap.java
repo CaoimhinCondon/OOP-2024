@@ -48,24 +48,28 @@ public class BugZap extends PApplet {
     }
 
     public void playerInput() {
-        if (keyPressed) {
 
+        if (keyPressed) {
+            
             if (keyCode == RIGHT) {
+                
                 playerX += movementSpeed;
             }
 
             if (keyCode == LEFT) {
+
                 playerX -= movementSpeed;
             }
 
-            if (keyCode == ' ') {
+            if (key == ' ') {
+
                 drawZapperFlag = true;
             }
         }
     }
 
     public void draw() {
-        
+
         background(0); // Clear the screen every frame
 
         playerInput(); // Update player position based on input
