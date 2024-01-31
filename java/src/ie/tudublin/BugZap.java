@@ -2,37 +2,36 @@ package ie.tudublin;
 
 import processing.core.PApplet;
 
-public class BugZap extends PApplet{
+public class BugZap extends PApplet {
 
     float playerX;
     float playerY;
     float playerWidth = 30;
     float movementSpeed = 2;
-    float zapFireTime = 1;
+    float score;
+    boolean drawZapperFlag = false; // Flag to indicate whether to draw the zapper
 
-    public void settings(){
+    public void settings() {
 
         size(500, 500);
     }
 
-    public void setup(){
+    public void setup() {
 
-        playerX = width/2;
+        playerX = width / 2;
         playerY = height - 20;
-
-        background(0);
-        drawPlayer(playerX, playerY, playerWidth);
+        score = 0;
     }
 
-    public void drawPlayer(float playerX, float playerY, float playerWidth){
+    public void drawPlayer(float playerX, float playerY, float playerWidth) {
 
-        float playerHeight = playerWidth/2;
+        float playerHeight = playerWidth / 2;
 
-        //Set outline colour to white
+        // Set outline colour to white
         stroke(255);
         strokeWeight(2);
 
-        //Set fill to black
+        // Set fill to black
         fill(0);
 
         // Calculate the top-left corner of the rectangle
@@ -43,36 +42,39 @@ public class BugZap extends PApplet{
         rect(rectX, rectY, playerWidth, playerHeight);
     }
 
-    public void drawZapper(){
+    public void drawZapper() {
 
-        line(playerX, playerY-((playerWidth/2)/2), playerX, 0);
+        line(playerX, playerY - ((playerWidth / 2) / 2), playerX, 0);
     }
 
-    public void playerInput(){
+    public void playerInput() {
+        if (keyPressed) {
 
-        if (keyCode == RIGHT && keyPressed == true){
+            if (keyCode == RIGHT) {
+                playerX += movementSpeed;
+            }
 
-            background(0);
-            playerX += movementSpeed;
-            drawPlayer(playerX, playerY, playerWidth);
+            if (keyCode == LEFT) {
+                playerX -= movementSpeed;
+            }
+
+            if (keyCode == ' ') {
+                drawZapperFlag = true;
+            }
         }
+    }
+
+    public void draw() {
         
-        if (keyCode == LEFT && keyPressed == true){
+        background(0); // Clear the screen every frame
 
-            background(0);
-            playerX -= movementSpeed;
-            drawPlayer(playerX, playerY, playerWidth);
-        }
+        playerInput(); // Update player position based on input
 
-        if (keyCode == ' '){
+        drawPlayer(playerX, playerY, playerWidth); // Draw the player
 
-            //Draws zapper
+        if (drawZapperFlag) {
             drawZapper();
+            drawZapperFlag = false; // Reset flag after drawing zapper
         }
-    }
-
-    public void draw(){
-
-        playerInput();
     }
 }
