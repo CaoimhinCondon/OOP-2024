@@ -2,17 +2,15 @@
 // Packages must match the folder structure
 package ie.tudublin;
 
-public class Main{
+public class Main {
 
-	public void BugZap(){
+	public void BugZap() {
 
 		String[] a = {"MAIN"};
 		processing.core.PApplet.runSketch(a, new BugZap());
 	}
 	
-	public static void main(String[] args){
-
-		System.out.println("Hello world");
+	public static void main(String[] args) {
 		
 		Main m = new Main();
 
