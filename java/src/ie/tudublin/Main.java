@@ -10,6 +10,12 @@ public class Main{
 		processing.core.PApplet.runSketch(a, new MyFirstProcessing());
 	}
 
+	public void HelloProcessing(){
+
+		String[] a = {"MAIN"};
+		processing.core.PApplet.runSketch(a, new HelloProcessing());
+	}
+
 	public void doDogStuff(){
 		// Create a new Dog called Misty
 		// Call the constructor
@@ -48,6 +54,7 @@ public class Main{
 		System.out.println(a.getName());
 		System.out.println(c.getName());
 
-		m.MyFirstProcessing();
+		//m.MyFirstProcessing();
+		m.HelloProcessing();
 	}
 }
