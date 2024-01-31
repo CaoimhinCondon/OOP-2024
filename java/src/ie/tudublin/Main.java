@@ -13,8 +13,8 @@ public class Main{
 	public void HelloProcessing(){
 
 		String[] a = {"MAIN"};
-		processing.core.PApplet.runSketch(a, new HelloProcessing());
-	}
+        processing.core.PApplet.runSketch(a, new HelloProcessing());
+    }
 
 	public void doDogStuff(){
 		// Create a new Dog called Misty

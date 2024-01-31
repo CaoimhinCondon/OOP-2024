@@ -15,6 +15,7 @@ public class Dog extends Animal
 	// A constructor that takes name
 	public Dog(String name)
 	{
+		this();
 		this.name = name;
 	}
 
