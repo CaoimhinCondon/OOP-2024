@@ -4,6 +4,8 @@ import processing.core.PApplet;
 
 public class BugZap extends PApplet {
 
+    float score;
+
     float playerX;
     float playerY;
     float playerWidth = 40;
@@ -15,8 +17,7 @@ public class BugZap extends PApplet {
     float bugMovementOffset = random(20, 100);
     float bugSpeed = random(10, 50);
 
-    float score;
-    boolean drawZapperFlag = false; // Flag to indicate whether to draw the zapper
+    boolean firingZapperFlag = false; // Flag to indicate whether to draw the zapper
 
     public void settings() {
 
@@ -29,7 +30,7 @@ public class BugZap extends PApplet {
         playerY = height - 20;
         score = 0;
 
-        bugX = random(1, width);
+        bugX = random(30, width-30);
         bugY = height - (height-20);
     }
 
@@ -74,7 +75,7 @@ public class BugZap extends PApplet {
 
             if (key == ' ') {
 
-                drawZapperFlag = true;
+                firingZapperFlag = true;
             }
         }
     }
@@ -114,11 +115,46 @@ public class BugZap extends PApplet {
         float bugMovementChangeX = random(-bugMovementOffset, bugMovementOffset);
         float bugMovementChangeY = random(1, bugSpeed);
 
-        if((frameCount % 60) == 0){
+        if((frameCount % 30) == 0){
 
             bugX += bugMovementChangeX;
             bugY += bugMovementChangeY;
         }
+    }
+
+    public void bugHitDetection() {
+
+        if (firingZapperFlag == true){
+
+            
+            if (((bugX-bugWidth/2) < playerX) && ((bugX+bugWidth/2) > playerX)){
+
+                score += 1;
+                bugX = random(30, width-30);
+                bugY = height - (height-20);
+            }
+        }
+
+        if (bugY > height - 20){
+
+            //Reset Score
+            score = 0;
+
+            //Reset Player
+            playerX = width / 2;
+            playerY = height - 20;
+
+            //Reset Bug
+            bugX = random(30, width-30);
+            bugY = height - (height-20);
+        }
+    }
+
+    public void displayScore() {
+
+        fill(255);  // Set text color to white
+        textSize(20); // Set text size
+        text("Score: " + score, 10, 20);
     }
 
     public void draw() {
@@ -130,10 +166,12 @@ public class BugZap extends PApplet {
         drawPlayer(playerX, playerY, playerWidth); // Draw the player
         drawBug(bugX, bugY, bugWidth); // Draw the bug
         bugMovement(); // Move the bug
+        bugHitDetection(); // Check if bug is being hit by zapper or has killed player
+        displayScore(); // Display the players score
 
-        if (drawZapperFlag) {
+        if (firingZapperFlag) {
             drawZapper();
-            drawZapperFlag = false; // Reset flag after drawing zapper
+            firingZapperFlag = false; // Reset flag after drawing zapper
         }
     }
 }
