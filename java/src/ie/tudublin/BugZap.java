@@ -12,7 +12,8 @@ public class BugZap extends PApplet {
     float bugX;
     float bugY;
     float bugWidth = 30;
-    float bugMovementOffset = 20;
+    float bugMovementOffset = random(20, 100);
+    float bugSpeed = random(10, 50);
 
     float score;
     boolean drawZapperFlag = false; // Flag to indicate whether to draw the zapper
@@ -28,7 +29,7 @@ public class BugZap extends PApplet {
         playerY = height - 20;
         score = 0;
 
-        bugX = width / 2;
+        bugX = random(1, width);
         bugY = height - (height-20);
     }
 
@@ -110,7 +111,14 @@ public class BugZap extends PApplet {
 
     public void bugMovement() {
 
-        
+        float bugMovementChangeX = random(-bugMovementOffset, bugMovementOffset);
+        float bugMovementChangeY = random(1, bugSpeed);
+
+        if((frameCount % 60) == 0){
+
+            bugX += bugMovementChangeX;
+            bugY += bugMovementChangeY;
+        }
     }
 
     public void draw() {
@@ -120,7 +128,8 @@ public class BugZap extends PApplet {
         playerInput(); // Update player position based on input
 
         drawPlayer(playerX, playerY, playerWidth); // Draw the player
-        drawBug(bugX, bugY, bugWidth);
+        drawBug(bugX, bugY, bugWidth); // Draw the bug
+        bugMovement(); // Move the bug
 
         if (drawZapperFlag) {
             drawZapper();
