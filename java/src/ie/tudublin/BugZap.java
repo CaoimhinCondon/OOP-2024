@@ -17,7 +17,7 @@ public class BugZap extends PApplet {
     float bugMovementOffset = random(20, 100);
     float bugSpeed = random(10, 50);
 
-    boolean firingZapperFlag = false; // Flag to indicate whether to draw the zapper
+    boolean firingZapperFlag = false; // Flag to indicate whether the zapper is activated
 
     public void settings() {
 
@@ -63,12 +63,12 @@ public class BugZap extends PApplet {
 
         if (keyPressed) {
             
-            if (keyCode == RIGHT) {
+            if (keyCode == RIGHT && ((playerX<(width-playerWidth/2)))) {
 
                 playerX += movementSpeed;
             }
 
-            if (keyCode == LEFT) {
+            if (keyCode == LEFT && (playerX>playerWidth/2)) {
 
                 playerX -= movementSpeed;
             }
@@ -112,8 +112,22 @@ public class BugZap extends PApplet {
 
     public void bugMovement() {
 
-        float bugMovementChangeX = random(-bugMovementOffset, bugMovementOffset);
-        float bugMovementChangeY = random(1, bugSpeed);
+        float bugMovementChangeX;
+        float bugMovementChangeY;
+
+        if (bugX > (width-bugWidth)){
+
+            bugMovementChangeX = -bugMovementOffset;
+            bugMovementChangeY = random(1, bugSpeed);
+        } else if((bugX < bugWidth)) {
+
+            bugMovementChangeX = bugMovementOffset;
+            bugMovementChangeY = random(1, bugSpeed);
+        }else{
+
+            bugMovementChangeX = random(-bugMovementOffset, bugMovementOffset);
+            bugMovementChangeY = random(1, bugSpeed);
+        }
 
         if((frameCount % 30) == 0){
 
@@ -135,7 +149,7 @@ public class BugZap extends PApplet {
             }
         }
 
-        if (bugY > height - 20){
+        if (bugY > height - (playerWidth/2)){
 
             //Reset Score
             score = 0;
