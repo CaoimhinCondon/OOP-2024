@@ -5,6 +5,7 @@ import processing.core.PApplet;
 public class BugZap extends PApplet {
 
     float score;
+    boolean gameStart = false;
 
     float playerX;
     float playerY;
@@ -61,7 +62,7 @@ public class BugZap extends PApplet {
 
     public void playerInput() {
 
-        if (keyPressed) {
+        if (keyPressed && (gameStart == true)) {
             
             if (keyCode == RIGHT && ((playerX<(width-playerWidth/2)))) {
 
@@ -76,6 +77,13 @@ public class BugZap extends PApplet {
             if (key == ' ') {
 
                 firingZapperFlag = true;
+            }
+        }else if(keyPressed && (gameStart == false)){
+
+            if (key == ' ') {
+
+                gameStart = true;
+                score = 0;
             }
         }
     }
@@ -151,9 +159,6 @@ public class BugZap extends PApplet {
 
         if (bugY > height - (playerWidth/2)){
 
-            //Reset Score
-            score = 0;
-
             //Reset Player
             playerX = width / 2;
             playerY = height - 20;
@@ -161,6 +166,8 @@ public class BugZap extends PApplet {
             //Reset Bug
             bugX = random(30, width-30);
             bugY = height - (height-20);
+
+            gameStart = false;
         }
     }
 
@@ -171,21 +178,40 @@ public class BugZap extends PApplet {
         text("Score: " + score, 10, 20);
     }
 
+    public void displayStartScreen() {
+
+        background(0);
+        fill(255); // Set text color
+        text("BugZap", width / 2, height / 3); // Display the game title
+        textAlign(CENTER, CENTER);
+        textSize(20); // Smaller text for score and instructions
+        text("Previous Score: " + score, width / 2, height / 2); // Display previous score
+        text("Press SPACE to play", width / 2, 2 * height / 3); // Display the prompt
+    
+    }
+
     public void draw() {
 
-        background(0); // Clear the screen every frame
+        displayStartScreen();
+        playerInput();
 
-        playerInput(); // Update player position based on input
+        if (gameStart == true){
 
-        drawPlayer(playerX, playerY, playerWidth); // Draw the player
-        drawBug(bugX, bugY, bugWidth); // Draw the bug
-        bugMovement(); // Move the bug
-        bugHitDetection(); // Check if bug is being hit by zapper or has killed player
-        displayScore(); // Display the players score
+            textAlign(LEFT, BASELINE);
+            background(0); // Clear the screen every frame
 
-        if (firingZapperFlag) {
-            drawZapper();
-            firingZapperFlag = false; // Reset flag after drawing zapper
+            playerInput(); // Update player position based on input
+
+            drawPlayer(playerX, playerY, playerWidth); // Draw the player
+            drawBug(bugX, bugY, bugWidth); // Draw the bug
+            bugMovement(); // Move the bug
+            bugHitDetection(); // Check if bug is being hit by zapper or has killed player
+            displayScore(); // Display the players score
+
+            if (firingZapperFlag) {
+                drawZapper();
+                firingZapperFlag = false; // Reset flag after drawing zapper
+            }
         }
     }
 }
